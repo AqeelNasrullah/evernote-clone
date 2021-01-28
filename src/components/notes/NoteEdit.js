@@ -1,6 +1,6 @@
 import React from "react"
 import {useDispatch, useSelector} from "react-redux";
-import {addNote, updateNote} from "../../store/actions/noteAction";
+import {updateNote} from "../../store/actions/noteAction";
 import useInput from "../../customHooks/useInput";
 import {useHistory} from "react-router-dom";
 
