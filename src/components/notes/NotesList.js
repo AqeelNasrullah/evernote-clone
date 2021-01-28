@@ -9,6 +9,7 @@ const Note = ({note}) => {
     const deleteNoteHandler = () => dispatch(deleteNote(note))
     const toggleFavoriteHandler = () => dispatch(toggleFav(note))
     const favMarkUp = note.favorite ? 'favorite' : 'favorite_outline'
+    const handleEditNote = () => dispatch({type:'EDIT_NOTE', payload: note})
 
     return (
         <div className="note white">
@@ -16,11 +17,11 @@ const Note = ({note}) => {
                 <i className="material-icons red-text" style={{cursor: 'pointer'}} onClick={toggleFavoriteHandler}>{favMarkUp}</i>
                 <i className="material-icons" style={{cursor: 'pointer'}} onClick={deleteNoteHandler}>delete</i>
             </div>
-            <Link to={"/note/" + note.id}><h5>{note.title}</h5></Link>
+            <Link exact to={"/note/" + note.id}><h5>{note.title}</h5></Link>
             <p className="truncate">{note.desc}</p>
             <p>{moment(note.createdAt.toDate()).fromNow()}</p>
             <div className="right-align">
-                <i className="material-icons" style={{cursor: 'pointer'}}>edit</i>
+                <Link to={`/note/${note.id}/edit`}><i className="material-icons" style={{cursor: 'pointer'}} onClick={handleEditNote}>edit</i></Link>
             </div>
         </div>
     )

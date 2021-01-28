@@ -46,3 +46,20 @@ export const toggleFav = (note) => {
             });
     }
 }
+
+export const updateNote = (note) => {
+    return (dispatch, getState, {getFirestore}) => {
+        const firestore = getFirestore();
+        firestore.collection('notes').doc(note.id)
+            .update({
+                title: note.title,
+                desc: note.desc
+            })
+            .then(() => {
+                alert('Note edited successfully');
+            })
+            .catch((error) => {
+                alert(error);
+            });
+    }
+}

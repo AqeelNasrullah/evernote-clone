@@ -1,18 +1,23 @@
 import React from "react"
+import {useDispatch, useSelector} from "react-redux";
+import {addNote, updateNote} from "../../store/actions/noteAction";
 import useInput from "../../customHooks/useInput";
-import {addNote} from "../../store/actions/noteAction";
-import {useDispatch} from "react-redux";
+import {useHistory} from "react-router-dom";
 
-const Form = () => {
-    const [title, bindTitle, resetTitle] = useInput();
-    const [desc, bindDesc, resetDesc] = useInput();
+const NoteEdit = () => {
+    const note = useSelector(state => state.note);
+
+    const [title, bindTitle, resetTitle] = useInput(note.title);
+    const [desc, bindDesc, resetDesc] = useInput(note.desc);
     const dispatch = useDispatch();
+    const history = useHistory();
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        dispatch(addNote({title, desc}));
+        dispatch(updateNote({id: note.id, title, desc}));
         resetTitle();
         resetDesc();
+        history.push('/');
     }
 
     return (
@@ -21,16 +26,16 @@ const Form = () => {
                 <h5 className="grey-text text-darken-3">New Note</h5>
                 <div className="input-field">
                     <input id="note_title" type="text" className="validate" {...bindTitle} />
-                    <label htmlFor="note_title">Note Title</label>
+                    <label className="active" htmlFor="note_title">Note Title</label>
                 </div>
                 <div className="input-field">
                     <textarea id="note_desc" className="materialize-textarea" {...bindDesc} ></textarea>
-                    <label htmlFor="note_desc">Note Description</label>
+                    <label className="active" htmlFor="note_desc">Note Description</label>
                 </div>
-                <button className="btn green">Add</button>
+                <button className="btn green">Update</button>
             </form>
         </div>
     )
 }
 
-export default Form;
+export default NoteEdit;
